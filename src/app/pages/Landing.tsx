@@ -26,18 +26,327 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  ReferenceDot,
 } from "recharts";
 
-const heroData = [
-  { month: "Jan", revenue: 42, leads: 28 },
-  { month: "Feb", revenue: 55, leads: 35 },
-  { month: "Mar", revenue: 48, leads: 42 },
-  { month: "Apr", revenue: 72, leads: 55 },
-  { month: "May", revenue: 68, leads: 49 },
-  { month: "Jun", revenue: 89, leads: 67 },
-  { month: "Jul", revenue: 95, leads: 78 },
-  { month: "Aug", revenue: 112, leads: 88 },
+/* ── Dashboard Demo data ── */
+const dashboardMetrics = [
+  {
+    label: "Total Revenue",
+    value: "$2.4M",
+    change: "+18%",
+    chartTitle: "Revenue Trend",
+    primaryKey: "revenue",
+    secondaryKey: "cost",
+    primaryColor: "#C4FF40",
+    secondaryColor: "#7B5CF5",
+    data: [
+      { month: "Jan", revenue: 1.2, cost: 0.8 },
+      { month: "Feb", revenue: 1.4, cost: 0.9 },
+      { month: "Mar", revenue: 1.3, cost: 0.85 },
+      { month: "Apr", revenue: 1.7, cost: 1.0 },
+      { month: "May", revenue: 1.9, cost: 1.1 },
+      { month: "Jun", revenue: 2.1, cost: 1.15 },
+      { month: "Jul", revenue: 2.3, cost: 1.2 },
+      { month: "Aug", revenue: 2.4, cost: 1.25 },
+    ],
+  },
+  {
+    label: "Active Users",
+    value: "14,832",
+    change: "+12%",
+    chartTitle: "User Growth",
+    primaryKey: "users",
+    secondaryKey: "newUsers",
+    primaryColor: "#22C55E",
+    secondaryColor: "#3B82F6",
+    data: [
+      { month: "Jan", users: 8200, newUsers: 1200 },
+      { month: "Feb", users: 9100, newUsers: 1400 },
+      { month: "Mar", users: 9800, newUsers: 1100 },
+      { month: "Apr", users: 10500, newUsers: 1600 },
+      { month: "May", users: 11200, newUsers: 1300 },
+      { month: "Jun", users: 12400, newUsers: 1800 },
+      { month: "Jul", users: 13600, newUsers: 2000 },
+      { month: "Aug", users: 14832, newUsers: 2200 },
+    ],
+  },
+  {
+    label: "Conversion Rate",
+    value: "4.7%",
+    change: "+0.8%",
+    chartTitle: "Conversion Trend",
+    primaryKey: "conversion",
+    secondaryKey: "benchmark",
+    primaryColor: "#F97316",
+    secondaryColor: "#6B7280",
+    data: [
+      { month: "Jan", conversion: 3.2, benchmark: 3.5 },
+      { month: "Feb", conversion: 3.4, benchmark: 3.5 },
+      { month: "Mar", conversion: 3.1, benchmark: 3.5 },
+      { month: "Apr", conversion: 3.8, benchmark: 3.6 },
+      { month: "May", conversion: 4.0, benchmark: 3.6 },
+      { month: "Jun", conversion: 4.2, benchmark: 3.7 },
+      { month: "Jul", conversion: 4.5, benchmark: 3.7 },
+      { month: "Aug", conversion: 4.7, benchmark: 3.8 },
+    ],
+  },
+  {
+    label: "Avg. Deal Size",
+    value: "$8.2K",
+    change: "+24%",
+    chartTitle: "Deal Size Trend",
+    primaryKey: "dealSize",
+    secondaryKey: "target",
+    primaryColor: "#EAB308",
+    secondaryColor: "#6B7280",
+    data: [
+      { month: "Jan", dealSize: 5.8, target: 6.0 },
+      { month: "Feb", dealSize: 6.1, target: 6.2 },
+      { month: "Mar", dealSize: 5.9, target: 6.4 },
+      { month: "Apr", dealSize: 6.8, target: 6.6 },
+      { month: "May", dealSize: 7.2, target: 6.8 },
+      { month: "Jun", dealSize: 7.5, target: 7.0 },
+      { month: "Jul", dealSize: 7.9, target: 7.2 },
+      { month: "Aug", dealSize: 8.2, target: 7.4 },
+    ],
+  },
 ];
+
+const DASHBOARD_CYCLE = 5000;
+
+function CustomTooltip({ metric }: { metric: typeof dashboardMetrics[0] }) {
+  const lastPoint = metric.data[metric.data.length - 1];
+  return (
+    <div
+      style={{
+        background: "#1A1D2E",
+        border: "1px solid rgba(255,255,255,0.1)",
+        padding: "8px 12px",
+        fontSize: "12px",
+        minWidth: "120px",
+      }}
+    >
+      <p style={{ color: "#fff", marginBottom: "4px", fontWeight: 400 }}>{lastPoint.month}</p>
+      <p style={{ color: metric.primaryColor }}>
+        {metric.primaryKey}: {lastPoint[metric.primaryKey as keyof typeof lastPoint]}
+      </p>
+      <p style={{ color: metric.secondaryColor }}>
+        {metric.secondaryKey}: {lastPoint[metric.secondaryKey as keyof typeof lastPoint]}
+      </p>
+    </div>
+  );
+}
+
+function DashboardDemo() {
+  const [activeMetric, setActiveMetric] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  const metric = dashboardMetrics[activeMetric];
+
+  // Auto-cycle
+  useEffect(() => {
+    const startTime = Date.now();
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min(elapsed / DASHBOARD_CYCLE, 1);
+      setProgress(pct);
+      if (pct >= 1) {
+        clearInterval(interval);
+        setActiveMetric((prev) => (prev + 1) % dashboardMetrics.length);
+        setProgress(0);
+      }
+    }, 30);
+    return () => clearInterval(interval);
+  }, [activeMetric]);
+
+  const lastPoint = metric.data[metric.data.length - 1];
+
+  return (
+    <div
+      className="relative mt-20 mx-auto rounded-2xl overflow-hidden"
+      style={{
+        maxWidth: "900px",
+        border: "1px solid rgba(255,255,255,0.08)",
+        background: "#0D0F1A",
+        boxShadow: "0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)",
+      }}
+    >
+      {/* Fake browser bar */}
+      <div
+        className="flex items-center gap-2 px-4 py-3"
+        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "#111420" }}
+      >
+        <div className="flex gap-1.5">
+          <div className="w-3 h-3 rounded-full" style={{ background: "#FF5F56" }} />
+          <div className="w-3 h-3 rounded-full" style={{ background: "#FFBD2E" }} />
+          <div className="w-3 h-3 rounded-full" style={{ background: "#27C93F" }} />
+        </div>
+        <div
+          className="flex-1 mx-4 rounded px-3 py-1 text-xs text-center"
+          style={{ background: "rgba(255,255,255,0.04)", color: "#4A5568" }}
+        >
+          app.datawhisper.ai/dashboard
+        </div>
+      </div>
+
+      {/* Dashboard content */}
+      <div className="p-6">
+        {/* Stat cards */}
+        <div className="grid grid-cols-4 gap-3 mb-4">
+          {dashboardMetrics.map((m, i) => {
+            const isActive = i === activeMetric;
+            return (
+              <motion.div
+                key={m.label}
+                className="p-3 rounded-xl cursor-pointer relative overflow-hidden"
+                onClick={() => {
+                  setActiveMetric(i);
+                  setProgress(0);
+                }}
+                animate={{
+                  borderColor: isActive
+                    ? m.primaryColor + "50"
+                    : "rgba(255,255,255,0.06)",
+                  background: isActive
+                    ? "rgba(255,255,255,0.04)"
+                    : "#161A28",
+                }}
+                transition={{ duration: 0.35 }}
+                style={{ border: "1px solid" }}
+              >
+                {/* Active progress line at bottom */}
+                {isActive && (
+                  <motion.div
+                    className="absolute bottom-0 left-0 h-[2px]"
+                    style={{
+                      width: `${progress * 100}%`,
+                      background: m.primaryColor,
+                    }}
+                  />
+                )}
+                <p className="text-xs mb-1" style={{ color: isActive ? m.primaryColor : "#6B7280" }}>
+                  {m.label}
+                </p>
+                <p className="text-lg" style={{ fontWeight: 400, color: "#fff" }}>{m.value}</p>
+                <span
+                  className="text-xs px-1.5 py-0.5 rounded"
+                  style={{
+                    background: isActive
+                      ? m.primaryColor + "20"
+                      : "rgba(196,255,64,0.12)",
+                    color: isActive ? m.primaryColor : "#C4FF40",
+                  }}
+                >
+                  {m.change}
+                </span>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Chart */}
+        <div
+          className="rounded-xl p-4 relative"
+          style={{ background: "#161A28", border: "1px solid rgba(255,255,255,0.06)" }}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={metric.chartTitle}
+                className="text-sm"
+                style={{ color: "#8892A4" }}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 4 }}
+                transition={{ duration: 0.2 }}
+              >
+                {metric.chartTitle}
+              </motion.p>
+            </AnimatePresence>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full" style={{ background: metric.primaryColor }} />
+                <span className="text-xs" style={{ color: "#6B7280" }}>{metric.primaryKey}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full" style={{ background: metric.secondaryColor }} />
+                <span className="text-xs" style={{ color: "#6B7280" }}>{metric.secondaryKey}</span>
+              </div>
+            </div>
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeMetric}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <ResponsiveContainer width="100%" height={160}>
+                <AreaChart data={metric.data} margin={{ left: 10, right: 50, top: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id={`grad1-${activeMetric}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={metric.primaryColor} stopOpacity={0.3} />
+                      <stop offset="95%" stopColor={metric.primaryColor} stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id={`grad2-${activeMetric}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={metric.secondaryColor} stopOpacity={0.2} />
+                      <stop offset="95%" stopColor={metric.secondaryColor} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid stroke="rgba(255,255,255,0.04)" vertical={false} />
+                  <XAxis dataKey="month" tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <YAxis width={40} tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <Area
+                    type="monotone"
+                    dataKey={metric.primaryKey}
+                    stroke={metric.primaryColor}
+                    strokeWidth={2}
+                    fill={`url(#grad1-${activeMetric})`}
+                    isAnimationActive={true}
+                    animationDuration={800}
+                    animationEasing="ease-out"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey={metric.secondaryKey}
+                    stroke={metric.secondaryColor}
+                    strokeWidth={1.5}
+                    strokeDasharray="4 4"
+                    fill={`url(#grad2-${activeMetric})`}
+                    isAnimationActive={true}
+                    animationDuration={800}
+                    animationEasing="ease-out"
+                  />
+                  <ReferenceDot
+                    x={lastPoint.month}
+                    y={Number(lastPoint[metric.primaryKey as keyof typeof lastPoint])}
+                    r={5}
+                    fill={metric.primaryColor}
+                    stroke="#0D0F1A"
+                    strokeWidth={2}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </motion.div>
+          </AnimatePresence>
+          {/* Always-visible tooltip */}
+          <motion.div
+            className="absolute"
+            style={{ right: "60px", top: "40px" }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+            key={activeMetric}
+          >
+            <CustomTooltip metric={metric} />
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const features = [
   {
@@ -582,87 +891,7 @@ export function Landing() {
         </p>
 
         {/* Dashboard preview */}
-        <div
-          className="relative mt-20 mx-auto rounded-2xl overflow-hidden"
-          style={{
-            maxWidth: "900px",
-            border: "1px solid rgba(255,255,255,0.08)",
-            background: "#0D0F1A",
-            boxShadow: "0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)",
-          }}
-        >
-          {/* Fake browser bar */}
-          <div
-            className="flex items-center gap-2 px-4 py-3"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "#111420" }}
-          >
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full" style={{ background: "#FF5F56" }} />
-              <div className="w-3 h-3 rounded-full" style={{ background: "#FFBD2E" }} />
-              <div className="w-3 h-3 rounded-full" style={{ background: "#27C93F" }} />
-            </div>
-            <div
-              className="flex-1 mx-4 rounded px-3 py-1 text-xs text-center"
-              style={{ background: "rgba(255,255,255,0.04)", color: "#4A5568" }}
-            >
-              app.datawhisper.ai/dashboard
-            </div>
-          </div>
-          {/* Dashboard content preview */}
-          <div className="p-6">
-            <div className="grid grid-cols-4 gap-3 mb-4">
-              {[
-                { label: "Total Revenue", value: "$2.4M", change: "+18%" },
-                { label: "Active Users", value: "14,832", change: "+12%" },
-                { label: "Conversion Rate", value: "4.7%", change: "+0.8%" },
-                { label: "Avg. Deal Size", value: "$8.2K", change: "+24%" },
-              ].map((stat, i) => (
-                <div
-                  key={i}
-                  className="p-3 rounded-xl"
-                  style={{ background: "#161A28", border: "1px solid rgba(255,255,255,0.06)" }}
-                >
-                  <p className="text-xs mb-1" style={{ color: "#6B7280" }}>{stat.label}</p>
-                  <p className="text-lg" style={{ fontWeight: 400, color: "#fff" }}>{stat.value}</p>
-                  <span
-                    className="text-xs px-1.5 py-0.5 rounded"
-                    style={{ background: "rgba(196,255,64,0.12)", color: "#C4FF40" }}
-                  >
-                    {stat.change}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div
-              className="rounded-xl p-4"
-              style={{ background: "#161A28", border: "1px solid rgba(255,255,255,0.06)" }}
-            >
-              <p className="text-sm mb-3" style={{ color: "#8892A4" }}>Revenue & Leads Trend</p>
-              <ResponsiveContainer width="100%" height={160}>
-                <AreaChart data={heroData}>
-                  <defs>
-                    <linearGradient id="heroRev" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#C4FF40" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#C4FF40" stopOpacity={0} />
-                    </linearGradient>
-                    <linearGradient id="heroLead" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#7B5CF5" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#7B5CF5" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid stroke="rgba(255,255,255,0.04)" vertical={false} />
-                  <XAxis dataKey="month" tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{ background: "#1A1D2E", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0", color: "#fff" }}
-                  />
-                  <Area type="monotone" dataKey="revenue" stroke="#C4FF40" strokeWidth={2} fill="url(#heroRev)" />
-                  <Area type="monotone" dataKey="leads" stroke="#7B5CF5" strokeWidth={2} fill="url(#heroLead)" />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
+        <DashboardDemo />
       </section>
 
       {/* Logos */}
