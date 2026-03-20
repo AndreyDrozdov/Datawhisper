@@ -40,7 +40,7 @@ const dashboardMetrics = [
     primaryKey: "revenue",
     secondaryKey: "cost",
     primaryColor: "#C4FF40",
-    secondaryColor: "#7B5CF5",
+    secondaryColor: "#6B7280",
     data: [
       { month: "Jan", revenue: 1.2, cost: 0.8 },
       { month: "Feb", revenue: 1.4, cost: 0.9 },
@@ -59,8 +59,8 @@ const dashboardMetrics = [
     chartTitle: "User Growth",
     primaryKey: "users",
     secondaryKey: "newUsers",
-    primaryColor: "#22C55E",
-    secondaryColor: "#3B82F6",
+    primaryColor: "#38BDF8",
+    secondaryColor: "#6B7280",
     data: [
       { month: "Jan", users: 8200, newUsers: 1200 },
       { month: "Feb", users: 9100, newUsers: 1400 },
@@ -79,7 +79,7 @@ const dashboardMetrics = [
     chartTitle: "Conversion Trend",
     primaryKey: "conversion",
     secondaryKey: "benchmark",
-    primaryColor: "#F97316",
+    primaryColor: "#7B5CF5",
     secondaryColor: "#6B7280",
     data: [
       { month: "Jan", conversion: 3.2, benchmark: 3.5 },
@@ -99,7 +99,7 @@ const dashboardMetrics = [
     chartTitle: "Deal Size Trend",
     primaryKey: "dealSize",
     secondaryKey: "target",
-    primaryColor: "#EAB308",
+    primaryColor: "#FB923C",
     secondaryColor: "#6B7280",
     data: [
       { month: "Jan", dealSize: 5.8, target: 6.0 },
@@ -198,27 +198,10 @@ function DashboardDemo() {
       style={{
         maxWidth: "900px",
         border: "1px solid rgba(255,255,255,0.08)",
-        background: "#0D0F1A",
+        background: "#090B13",
         boxShadow: "0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)",
       }}
     >
-      {/* Fake browser bar */}
-      <div
-        className="flex items-center gap-2 px-4 py-3"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "#111420" }}
-      >
-        <div className="flex gap-1.5">
-          <div className="w-3 h-3 rounded-full" style={{ background: "#FF5F56" }} />
-          <div className="w-3 h-3 rounded-full" style={{ background: "#FFBD2E" }} />
-          <div className="w-3 h-3 rounded-full" style={{ background: "#27C93F" }} />
-        </div>
-        <div
-          className="flex-1 mx-4 rounded px-3 py-1 text-xs text-center"
-          style={{ background: "rgba(255,255,255,0.04)", color: "#4A5568" }}
-        >
-          app.doppler.ai/dashboard
-        </div>
-      </div>
 
       {/* Dashboard content */}
       <div className="p-6">
@@ -229,7 +212,7 @@ function DashboardDemo() {
             return (
               <motion.div
                 key={m.label}
-                className="p-3 rounded-xl cursor-pointer relative overflow-hidden"
+                className="p-3 rounded-xl cursor-pointer relative overflow-hidden text-center"
                 onClick={() => {
                   setActiveMetric(i);
                   setProgress(0);
@@ -240,7 +223,7 @@ function DashboardDemo() {
                     : "rgba(255,255,255,0.06)",
                   background: isActive
                     ? "rgba(255,255,255,0.04)"
-                    : "#161A28",
+                    : "rgba(255,255,255,0.03)",
                 }}
                 transition={{ duration: 0.35 }}
                 style={{ border: "1px solid" }}
@@ -255,21 +238,21 @@ function DashboardDemo() {
                     }}
                   />
                 )}
-                <p className="text-xs mb-1" style={{ color: isActive ? m.primaryColor : "#6B7280" }}>
+                <p className="text-[11px] mb-1 uppercase tracking-wider font-medium" style={{ color: isActive ? m.primaryColor : "#6B7280" }}>
                   {m.label}
                 </p>
-                <p className="text-lg" style={{ fontWeight: 400, color: "#fff" }}>{m.value}</p>
-                <span
-                  className="text-xs px-1.5 py-0.5 rounded"
-                  style={{
-                    background: isActive
-                      ? m.primaryColor + "20"
-                      : "rgba(196,255,64,0.12)",
-                    color: isActive ? m.primaryColor : "#C4FF40",
-                  }}
-                >
-                  {m.change}
-                </span>
+                <div className="flex items-center justify-center gap-2 mt-0.5">
+                  <p className="text-2xl" style={{ fontWeight: 400, color: "#fff", fontFamily: "'Space Grotesk', sans-serif" }}>{m.value}</p>
+                  <span
+                    className="text-xs px-1.5 py-0.5 rounded-full font-medium"
+                    style={{
+                      background: m.primaryColor + "20",
+                      color: m.primaryColor,
+                    }}
+                  >
+                    {m.change}
+                  </span>
+                </div>
               </motion.div>
             );
           })}
@@ -278,7 +261,7 @@ function DashboardDemo() {
         {/* Chart */}
         <div
           className="rounded-xl px-4 pt-4 pb-4 relative"
-          style={{ background: "#161A28", border: "1px solid rgba(255,255,255,0.06)" }}
+          style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
           <div className="flex items-center justify-between mb-3">
             <AnimatePresence mode="wait">
@@ -598,7 +581,7 @@ function AiQueryDemo() {
   }, []);
 
   return (
-    <section className="py-20 px-8" style={{ background: "#0D0F1A" }}>
+    <section className="py-20 px-8" style={{ background: "#090B13" }}>
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
           {/* Left — Questions */}
@@ -669,7 +652,7 @@ function AiQueryDemo() {
           {/* Right — AI Response Panel */}
           <div
             className="rounded-2xl overflow-hidden flex flex-col"
-            style={{ background: "#161A28", border: "1px solid rgba(255,255,255,0.08)" }}
+            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
           >
             {/* Progress bar */}
             <div className="relative" style={{ height: "2px", background: "rgba(255,255,255,0.04)" }}>
@@ -871,7 +854,7 @@ export function Landing() {
           className="max-w-4xl mx-auto mb-6"
           style={{
             fontSize: "clamp(40px, 6vw, 76px)",
-            fontWeight: 400,
+            fontWeight: 600,
             lineHeight: 1.1,
             letterSpacing: "-2px",
           }}
@@ -943,7 +926,7 @@ export function Landing() {
                 key={feature.title}
                 className="p-6 rounded-2xl transition-all duration-200 hover:translate-y-[-2px]"
                 style={{
-                  background: "#0D0F1A",
+                  background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.06)",
                 }}
               >
@@ -989,7 +972,7 @@ export function Landing() {
               <div
                 key={t.name}
                 className="p-6 rounded-2xl"
-                style={{ background: "#0D0F1A", border: "1px solid rgba(255,255,255,0.06)" }}
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
               >
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: t.rating }).map((_, i) => (
@@ -1022,7 +1005,7 @@ export function Landing() {
       </section>
 
       {/* Pricing */}
-      <section className="py-20 px-8" style={{ background: "#0D0F1A" }}>
+      <section className="py-20 px-8" style={{ background: "#090B13" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="mb-3" style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 400, letterSpacing: "-1px" }}>
@@ -1036,7 +1019,7 @@ export function Landing() {
                 key={plan.name}
                 className="p-6 rounded-2xl relative flex flex-col h-full"
                 style={{
-                  background: plan.highlight ? "linear-gradient(135deg, rgba(196,255,64,0.06), rgba(123,92,245,0.06))" : "#161A28",
+                  background: plan.highlight ? "linear-gradient(135deg, rgba(196,255,64,0.06), rgba(123,92,245,0.06))" : "rgba(255,255,255,0.03)",
                   border: plan.highlight ? "1px solid rgba(196,255,64,0.3)" : "1px solid rgba(255,255,255,0.06)",
                 }}
               >
@@ -1080,10 +1063,7 @@ export function Landing() {
 
       {/* CTA */}
       <section className="py-24 px-8 text-center relative overflow-hidden">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at center, rgba(196,255,64,0.05) 0%, transparent 70%)" }}
-        />
+
         <h2
           className="max-w-2xl mx-auto mb-6"
           style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 400, lineHeight: 1.1, letterSpacing: "-1.5px" }}

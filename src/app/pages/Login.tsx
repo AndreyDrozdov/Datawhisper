@@ -29,11 +29,7 @@ export function Login() {
         className="hidden lg:flex flex-col justify-between w-2/5 p-10 relative overflow-hidden"
         style={{ background: "#0D0F1A", borderRight: "1px solid rgba(255,255,255,0.06)" }}
       >
-        {/* Glow */}
-        <div
-          className="absolute top-0 left-0 w-full h-full pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 30% 40%, rgba(196,255,64,0.06) 0%, transparent 70%)" }}
-        />
+
         <div>
           <div className="flex items-center gap-2 mb-16">
             <img src="/src/assets/logo.svg" alt="Doppler" style={{ height: "32px", width: "auto" }} />
