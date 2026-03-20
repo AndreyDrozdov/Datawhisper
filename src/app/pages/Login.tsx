@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { Mail, Lock, Eye, EyeOff, Activity, ArrowRight, Github } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Activity, ArrowRight, Github, Star } from "lucide-react";
 import { toast } from "sonner";
 
 export function Login() {
@@ -36,13 +36,7 @@ export function Login() {
         />
         <div>
           <div className="flex items-center gap-2 mb-16">
-            <div
-              className="flex items-center justify-center rounded-lg"
-              style={{ width: "32px", height: "32px", background: "linear-gradient(135deg, #C4FF40 0%, #7B5CF5 100%)" }}
-            >
-              <Activity size={18} color="#000" />
-            </div>
-            <span style={{ fontWeight: 300, fontSize: "16px", color: "#fff" }}>DataWhisper</span>
+            <img src="/src/assets/logo.svg" alt="Doppler" style={{ height: "32px", width: "auto" }} />
           </div>
 
           <h2
@@ -80,8 +74,13 @@ export function Login() {
           className="p-5 rounded-2xl"
           style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
+          <div className="flex gap-1 mb-3">
+            {[1, 2, 3, 4, 5].map((s) => (
+              <Star key={s} size={12} fill="#FBBF24" style={{ color: "#FBBF24" }} />
+            ))}
+          </div>
           <p className="text-sm mb-3" style={{ color: "#8892A4", lineHeight: 1.6 }}>
-            "DataWhisper completely changed how our team uses data. We went from weekly reports to real-time insights in a week."
+            "Doppler completely changed how our team uses data. We went from weekly reports to real-time insights in a week."
           </p>
           <div className="flex items-center gap-3">
             <div
@@ -103,20 +102,14 @@ export function Login() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-8 lg:hidden">
-            <div
-              className="flex items-center justify-center rounded-lg"
-              style={{ width: "32px", height: "32px", background: "linear-gradient(135deg, #C4FF40, #7B5CF5)" }}
-            >
-              <Activity size={18} color="#000" />
-            </div>
-            <span style={{ fontWeight: 300, color: "#fff" }}>DataWhisper</span>
+            <img src="/src/assets/logo.svg" alt="Doppler" style={{ height: "32px", width: "auto" }} />
           </div>
 
           <h1 style={{ fontSize: "28px", fontWeight: 400, color: "#fff", marginBottom: "8px" }}>
             Welcome back
           </h1>
           <p className="mb-8" style={{ color: "#6B7280" }}>
-            Sign in to your DataWhisper account
+            Sign in to your Doppler account
           </p>
 
           {/* OAuth */}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   Database,
   Cloud,
-  CheckCircle2,
+  Check,
   XCircle,
   AlertCircle,
   Plus,
@@ -100,7 +100,7 @@ const availableIntegrations = [
 ];
 
 const statusConfig: Record<string, { label: string; color: string; icon: any; bg: string }> = {
-  connected: { label: "Connected", color: "#C4FF40", icon: CheckCircle2, bg: "rgba(196,255,64,0.1)" },
+  connected: { label: "Connected", color: "#C4FF40", icon: Check, bg: "rgba(196,255,64,0.1)" },
   syncing: { label: "Syncing", color: "#F97316", icon: RefreshCw, bg: "rgba(249,115,22,0.1)" },
   error: { label: "Error", color: "#EF4444", icon: XCircle, bg: "rgba(239,68,68,0.1)" },
   disconnected: { label: "Disconnected", color: "#6B7280", icon: AlertCircle, bg: "rgba(107,114,128,0.1)" },
@@ -155,7 +155,7 @@ export function DataSources() {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[
-          { label: "Connected Sources", value: "4", icon: CheckCircle2, color: "#C4FF40" },
+          { label: "Connected Sources", value: "4", icon: Check, color: "#C4FF40" },
           { label: "Total Records", value: "29.7M", icon: Database, color: "#7B5CF5" },
           { label: "Last Synced", value: "30s ago", icon: Clock, color: "#38BDF8" },
           { label: "Data Quality", value: "96.4%", icon: Activity, color: "#FB923C" },

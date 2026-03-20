@@ -193,7 +193,7 @@ export function Settings() {
               <div className="space-y-1">
                 {Object.entries(notifications).map(([key, value]) => {
                   const labels: Record<string, { label: string; desc: string }> = {
-                    aiInsights: { label: "AI Insights", desc: "Get notified when DataWhisper finds new insights" },
+                    aiInsights: { label: "AI Insights", desc: "Get notified when Doppler finds new insights" },
                     anomalyAlerts: { label: "Anomaly Alerts", desc: "Real-time alerts for unusual data patterns" },
                     weeklyReport: { label: "Weekly Report", desc: "Automated weekly summary sent every Monday" },
                     teamActivity: { label: "Team Activity", desc: "Updates when team members share reports" },

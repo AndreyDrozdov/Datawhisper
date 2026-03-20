@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { Mail, Lock, Eye, EyeOff, User, Building2, Activity, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, User, Building2, Activity, ArrowRight, Check } from "lucide-react";
 import { toast } from "sonner";
 
 const steps = ["Account", "Company", "Plan"];
@@ -28,7 +28,7 @@ export function Signup() {
       setLoading(true);
       await new Promise((r) => setTimeout(r, 1400));
       setLoading(false);
-      toast.success("Account created! Welcome to DataWhisper 🎉");
+      toast.success("Account created! Welcome to Doppler 🎉");
       navigate("/app");
     }
   };
@@ -40,14 +40,8 @@ export function Signup() {
     >
       <div className="w-full max-w-lg">
         {/* Logo */}
-        <div className="flex items-center gap-2 justify-center mb-8">
-          <div
-            className="flex items-center justify-center rounded-lg"
-            style={{ width: "32px", height: "32px", background: "linear-gradient(135deg, #C4FF40 0%, #7B5CF5 100%)" }}
-          >
-            <Activity size={18} color="#000" />
-          </div>
-          <span style={{ fontWeight: 300, fontSize: "16px", color: "#fff" }}>DataWhisper</span>
+        <div className="flex items-center gap-2 justify-center mb-8 text-center">
+          <img src="/src/assets/logo.svg" alt="Doppler" style={{ height: "32px", width: "auto" }} />
         </div>
 
         {/* Progress */}
@@ -64,7 +58,7 @@ export function Signup() {
                   fontWeight: 300,
                 }}
               >
-                {i < step ? <CheckCircle2 size={14} /> : i + 1}
+                {i < step ? <Check size={14} /> : i + 1}
               </div>
               <span className="text-sm" style={{ color: i <= step ? "#fff" : "#4A5568" }}>{s}</span>
               {i < steps.length - 1 && (
@@ -207,7 +201,7 @@ export function Signup() {
                         className="w-5 h-5 rounded-full flex items-center justify-center"
                         style={{ background: form.plan === plan.id ? "#C4FF40" : "rgba(255,255,255,0.1)" }}
                       >
-                        {form.plan === plan.id && <CheckCircle2 size={12} color="#000" />}
+                        {form.plan === plan.id && <Check size={12} color="#000" />}
                       </div>
                     </div>
                   </button>

@@ -7,7 +7,7 @@ import {
   Database,
   Zap,
   ArrowRight,
-  CheckCircle2,
+  Check,
   TrendingUp,
   Brain,
   MessageSquare,
@@ -117,41 +117,42 @@ const dashboardMetrics = [
 const DASHBOARD_CYCLE = 5000;
 
 const AnchoredTooltip = (props: any) => {
-  const { cx, cy, fill, payload, value } = props;
+  const { cx, cy, color, value } = props;
   if (!cx || !cy) return null;
   
   return (
     <g style={{ pointerEvents: "none" }}>
-      {/* Dark tooltip bubble */}
-      <rect
-        x={cx - 35}
-        y={cy - 44}
-        width={70}
-        height={26}
-        rx={8}
-        fill="#111420"
-        stroke="rgba(255,255,255,0.3)"
-        strokeWidth={1.5}
-      />
-      {/* Triangle pointer */}
-      <path
-        d={`M ${cx - 6} ${cy - 18} L ${cx} ${cy - 10} L ${cx + 6} ${cy - 18} Z`}
-        fill="#111420"
-      />
-      {/* Value Text */}
-      <text
-        x={cx}
-        y={cy - 30}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill="#fff"
-        style={{ fontSize: "12px", fontWeight: 600, fontFamily: "Inter, sans-serif" }}
+      <motion.g
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
-        {value}
-      </text>
+        <rect
+          x={cx - 35}
+          y={cy - 44}
+          width={70}
+          height={26}
+          rx={8}
+          fill={color}
+        />
+        <path
+          d={`M ${cx - 6} ${cy - 18} L ${cx} ${cy - 10} L ${cx + 6} ${cy - 18} Z`}
+          fill={color}
+        />
+        <text
+          x={cx}
+          y={cy - 30}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill="#000"
+          style={{ fontSize: "12px", fontWeight: 700, fontFamily: "Inter, sans-serif" }}
+        >
+          {value}
+        </text>
+      </motion.g>
       
-      {/* The data point dot itself (white center) */}
-      <circle cx={cx} cy={cy} r={6} fill={fill} />
+      {/* Data point dot — Static */}
+      <circle cx={cx} cy={cy} r={6} fill={color} />
       <circle cx={cx} cy={cy} r={3.5} fill="#fff" />
     </g>
   );
@@ -160,8 +161,16 @@ const AnchoredTooltip = (props: any) => {
 function DashboardDemo() {
   const [activeMetric, setActiveMetric] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const metric = dashboardMetrics[activeMetric];
+
+  // Tooltip entrance delay
+  useEffect(() => {
+    setShowTooltip(false);
+    const timer = setTimeout(() => setShowTooltip(true), 800);
+    return () => clearTimeout(timer);
+  }, [activeMetric]);
 
   // Auto-cycle
   useEffect(() => {
@@ -207,7 +216,7 @@ function DashboardDemo() {
           className="flex-1 mx-4 rounded px-3 py-1 text-xs text-center"
           style={{ background: "rgba(255,255,255,0.04)", color: "#4A5568" }}
         >
-          app.datawhisper.ai/dashboard
+          app.doppler.ai/dashboard
         </div>
       </div>
 
@@ -268,7 +277,7 @@ function DashboardDemo() {
 
         {/* Chart */}
         <div
-          className="rounded-xl p-4 relative"
+          className="rounded-xl px-4 pt-4 pb-4 relative"
           style={{ background: "#161A28", border: "1px solid rgba(255,255,255,0.06)" }}
         >
           <div className="flex items-center justify-between mb-3">
@@ -304,8 +313,8 @@ function DashboardDemo() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <ResponsiveContainer width="100%" height={160}>
-                <AreaChart data={metric.data} margin={{ left: 10, right: 50, top: 40, bottom: 0 }}>
+              <ResponsiveContainer width="100%" height={180}>
+                <AreaChart data={metric.data} margin={{ left: 10, right: 50, top: 35, bottom: 0 }}>
                   <defs>
                     <linearGradient id={`grad1-${activeMetric}`} x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor={metric.primaryColor} stopOpacity={0.3} />
@@ -343,18 +352,21 @@ function DashboardDemo() {
                   <ReferenceDot
                     x={anchoredPoint.month}
                     y={Number(anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint])}
-                    fill={metric.primaryColor}
+                    fill="none"
                     stroke="none"
                     isFront={true}
                     shape={
-                      <AnchoredTooltip
-                        value={
-                          metric.primaryKey === "revenue" ? `$${anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint]}M` :
-                          metric.primaryKey === "users" ? `${((anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint] as unknown as number) / 1000).toFixed(1)}K` :
-                          metric.primaryKey === "conversion" ? `${anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint]}%` :
-                          `$${anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint]}K`
-                        }
-                      />
+                      showTooltip ? (
+                        <AnchoredTooltip
+                          color={metric.primaryColor}
+                          value={
+                            metric.primaryKey === "revenue" ? `$${anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint]}M` :
+                            metric.primaryKey === "users" ? `${((anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint] as unknown as number) / 1000).toFixed(1)}K` :
+                            metric.primaryKey === "conversion" ? `${anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint]}%` :
+                            `$${anchoredPoint[metric.primaryKey as keyof typeof anchoredPoint]}K`
+                          }
+                        />
+                      ) : undefined
                     }
                   />
                 </AreaChart>
@@ -378,7 +390,7 @@ const features = [
   {
     icon: BarChart3,
     title: "Automated Visualizations",
-    desc: "DataWhisper automatically picks the best chart type and creates stunning visuals.",
+    desc: "Doppler automatically picks the best chart type and creates stunning visuals.",
     color: "#C4FF40",
   },
   {
@@ -412,7 +424,7 @@ const testimonials = [
     name: "Sarah Chen",
     role: "VP of Marketing, TechFlow",
     quote:
-      "DataWhisper cut our reporting time by 80%. Now I get insights in seconds instead of waiting days for the data team.",
+      "Doppler cut our reporting time by 80%. Now I get insights in seconds instead of waiting days for the data team.",
     avatar: "https://i.pravatar.cc/150?u=sarah",
     rating: 5,
   },
@@ -428,7 +440,7 @@ const testimonials = [
     name: "Priya Sharma",
     role: "Sales Director, Apex Corp",
     quote:
-      "Our sales team finally has real-time visibility. DataWhisper is the first BI tool they actually use every day.",
+      "Our sales team finally has real-time visibility. Doppler is the first BI tool they actually use every day.",
     avatar: "https://i.pravatar.cc/150?u=priya",
     rating: 5,
   },
@@ -605,7 +617,7 @@ function AiQueryDemo() {
             </h2>
             <p className="mb-6" style={{ color: "#8892A4", lineHeight: 1.7 }}>
               No SQL. No code. No waiting. Type your question in plain English and
-              DataWhisper instantly translates it into insights, charts, and recommendations.
+              Doppler instantly translates it into insights, charts, and recommendations.
             </p>
             <div className="space-y-3 flex-1">
               {aiDemoQueries.map((q, i) => {
@@ -681,7 +693,7 @@ function AiQueryDemo() {
               >
                 <Orbit size={14} style={{ color: "#C4FF40" }} />
               </motion.div>
-              <span className="text-sm" style={{ color: "#C4FF40", fontWeight: 400 }}>Ask DataWhisper</span>
+              <span className="text-sm" style={{ color: "#C4FF40", fontWeight: 400 }}>Ask Doppler</span>
               <span className="ml-auto text-xs px-2 py-0.5 rounded" style={{ background: "rgba(196,255,64,0.1)", color: "#C4FF40" }}>
                 AI
               </span>
@@ -796,53 +808,45 @@ export function Landing() {
     >
       {/* Nav */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4"
+        className="fixed top-0 left-0 right-0 z-50 px-8 py-4"
         style={{
           background: "rgba(9,11,19,0.8)",
           backdropFilter: "blur(12px)",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <div className="flex items-center gap-2">
-          <div
-            className="flex items-center justify-center rounded-lg"
-            style={{
-              width: "32px",
-              height: "32px",
-              background: "linear-gradient(135deg, #C4FF40 0%, #7B5CF5 100%)",
-            }}
-          >
-            <Activity size={18} color="#000" />
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img src="/src/assets/logo.svg" alt="Doppler" style={{ height: "32px", width: "auto" }} />
           </div>
-          <span style={{ fontWeight: 400, fontSize: "16px" }}>DataWhisper</span>
-        </div>
-        <div className="hidden md:flex items-center gap-8">
-          {["Features", "Pricing", "Docs", "Blog"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="text-sm transition-colors hover:text-white"
+          <div className="hidden md:flex items-center gap-8">
+            {["Features", "Pricing", "Docs", "Blog"].map((item) => (
+              <a
+                key={item}
+                href="#"
+                className="text-sm transition-colors hover:text-white"
+                style={{ color: "#8892A4" }}
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/login"
+              className="text-sm px-4 py-2 rounded-lg transition-colors"
               style={{ color: "#8892A4" }}
             >
-              {item}
-            </a>
-          ))}
-        </div>
-        <div className="flex items-center gap-3">
-          <Link
-            to="/login"
-            className="text-sm px-4 py-2 rounded-lg transition-colors"
-            style={{ color: "#8892A4" }}
-          >
-            Sign in
-          </Link>
-          <Link
-            to="/signup"
-            className="text-sm px-4 py-2 rounded-lg transition-all"
-            style={{ background: "#C4FF40", color: "#000", fontWeight: 400 }}
-          >
-            Get started free
-          </Link>
+              Sign in
+            </Link>
+            <Link
+              to="/signup"
+              className="text-sm px-4 py-2 rounded-lg transition-all"
+              style={{ background: "#C4FF40", color: "#000", fontWeight: 400 }}
+            >
+              Get started free
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -874,14 +878,12 @@ export function Landing() {
         >
           Turn your data into{" "}
           <span style={{ color: "#C4FF40" }}>instant insights</span>
-          <br />
-          with the power of AI
         </h1>
         <p
           className="max-w-2xl mx-auto mb-10 text-lg"
           style={{ color: "#8892A4", lineHeight: 1.7 }}
         >
-          DataWhisper connects to your data sources and lets you ask questions in plain
+          Doppler connects to your data sources and lets you ask questions in plain
           English. Get AI-generated charts, reports, and recommendations — in seconds.
         </p>
 
@@ -914,20 +916,6 @@ export function Landing() {
         <DashboardDemo />
       </section>
 
-      {/* Logos */}
-      <section className="py-16 px-8" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-        <p className="text-center text-sm mb-8" style={{ color: "#4A5568" }}>
-          TRUSTED BY LEADING COMPANIES
-        </p>
-        <div className="flex items-center justify-center gap-12 flex-wrap opacity-40">
-          {["Salesforce", "HubSpot", "Stripe", "Notion", "Figma", "Linear", "Vercel", "Snowflake"].map((logo) => (
-            <span key={logo} style={{ color: "#8892A4", fontWeight: 400, fontSize: "14px" }}>
-              {logo}
-            </span>
-          ))}
-        </div>
-      </section>
-
       {/* Features */}
       <section className="py-20 px-8">
         <div className="max-w-6xl mx-auto">
@@ -945,7 +933,7 @@ export function Landing() {
               Everything you need to understand your data
             </h2>
             <p style={{ color: "#8892A4" }}>
-              From raw data to actionable insights, DataWhisper handles it all.
+              From raw data to actionable insights, Doppler handles it all.
             </p>
           </div>
 
@@ -1005,7 +993,7 @@ export function Landing() {
               >
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} size={14} fill="#C4FF40" style={{ color: "#C4FF40" }} />
+                    <Star key={i} size={14} fill="#FBBF24" style={{ color: "#FBBF24" }} />
                   ))}
                 </div>
                 <p className="text-sm mb-6 leading-relaxed" style={{ color: "#8892A4" }}>
@@ -1046,7 +1034,7 @@ export function Landing() {
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className="p-6 rounded-2xl relative"
+                className="p-6 rounded-2xl relative flex flex-col h-full"
                 style={{
                   background: plan.highlight ? "linear-gradient(135deg, rgba(196,255,64,0.06), rgba(123,92,245,0.06))" : "#161A28",
                   border: plan.highlight ? "1px solid rgba(196,255,64,0.3)" : "1px solid rgba(255,255,255,0.06)",
@@ -1066,17 +1054,17 @@ export function Landing() {
                   <span style={{ color: "#6B7280" }}>{plan.period}</span>
                 </div>
                 <p className="text-sm mb-6" style={{ color: "#6B7280" }}>{plan.desc}</p>
-                <ul className="space-y-3 mb-6">
+                <ul className="space-y-3 mb-8">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 size={14} style={{ color: "#C4FF40" }} />
+                      <Check size={14} style={{ color: "#C4FF40" }} />
                       <span style={{ color: "#8892A4" }}>{f}</span>
                     </li>
                   ))}
                 </ul>
                 <Link
                   to="/signup"
-                  className="block w-full text-center py-2.5 rounded-xl text-sm transition-all font-medium"
+                  className="block w-full text-center py-2.5 rounded-xl text-sm transition-all font-medium mt-auto"
                   style={{
                     background: plan.highlight ? "#C4FF40" : "rgba(255,255,255,0.08)",
                     color: plan.highlight ? "#000" : "#fff",
@@ -1103,7 +1091,7 @@ export function Landing() {
           Ready to unlock your data's potential?
         </h2>
         <p className="mb-10 text-lg" style={{ color: "#8892A4" }}>
-          Join 5,000+ teams using DataWhisper to make better decisions, faster.
+          Join 5,000+ teams using Doppler to make better decisions, faster.
         </p>
         <Link
           to="/signup"
@@ -1123,13 +1111,7 @@ export function Landing() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
             <div className="col-span-2">
               <div className="flex items-center gap-2 mb-3">
-                <div
-                  className="flex items-center justify-center rounded-lg"
-                  style={{ width: "28px", height: "28px", background: "linear-gradient(135deg, #C4FF40 0%, #7B5CF5 100%)" }}
-                >
-                  <Activity size={14} color="#000" />
-                </div>
-                <span style={{ fontWeight: 400, fontSize: "14px" }}>DataWhisper</span>
+                <img src="/src/assets/logo.svg" alt="Doppler" style={{ height: "24px", width: "auto" }} />
               </div>
               <p className="text-sm" style={{ color: "#6B7280", maxWidth: "240px", lineHeight: 1.6 }}>
                 AI-powered data intelligence for modern business teams.
@@ -1158,7 +1140,7 @@ export function Landing() {
             className="flex items-center justify-between pt-8 text-sm"
             style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "#4A5568" }}
           >
-            <p>© 2026 DataWhisper, Inc. All rights reserved.</p>
+            <p>© 2026 Doppler, Inc. All rights reserved.</p>
             <p>Built with ❤️ for data-driven teams</p>
           </div>
         </div>

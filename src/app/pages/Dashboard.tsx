@@ -11,7 +11,7 @@ import {
   RefreshCw,
   MoreHorizontal,
   AlertTriangle,
-  CheckCircle2,
+  Check,
   Brain,
   Zap,
   Target,
@@ -283,7 +283,7 @@ export function Dashboard() {
               <XAxis dataKey="month" tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
               <Tooltip
-                contentStyle={{ background: "#1A1D2E", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0", color: "#fff", fontSize: "12px" }}
+                contentStyle={{ background: "#1A1D2E", border: "none", borderRadius: "12px", color: "#fff", fontSize: "12px" }}
               />
               <Area type="monotone" dataKey="revenue" stroke="#C4FF40" strokeWidth={2} fill="url(#revGrad)" dot={false} name="Revenue ($K)" />
               <Area type="monotone" dataKey="target" stroke="#7B5CF5" strokeWidth={2} strokeDasharray="4 4" fill="url(#targetGrad)" dot={false} name="Target ($K)" />
@@ -409,7 +409,7 @@ export function Dashboard() {
                     className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
                     style={{ background: "rgba(255,255,255,0.05)", color: "#8892A4" }}
                   >
-                    <CheckCircle2 size={10} />
+                    <Check size={10} />
                     {insight.confidence}% confidence
                   </div>
                   <button className="text-xs" style={{ color: "#C4FF40" }}>Act →</button>
@@ -444,7 +444,7 @@ export function Dashboard() {
             <XAxis dataKey="day" tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
             <Tooltip
-              contentStyle={{ background: "#1A1D2E", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0", color: "#fff", fontSize: "12px" }}
+              contentStyle={{ background: "#1A1D2E", border: "none", borderRadius: "12px", color: "#fff", fontSize: "12px" }}
             />
             <Bar dataKey="sessions" fill="#7B5CF5" radius={[4, 4, 0, 0]} maxBarSize={40} name="Sessions" />
             <Bar dataKey="conversions" fill="#C4FF40" radius={[4, 4, 0, 0]} maxBarSize={40} name="Conversions" />

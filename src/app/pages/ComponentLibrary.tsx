@@ -140,7 +140,7 @@ export function ComponentLibrary() {
       <main className="flex-1 p-6 overflow-auto">
         <div className="mb-6">
           <h1 style={{ fontSize: "24px", fontWeight: 300, color: "#fff" }}>Component Library</h1>
-          <p style={{ color: "#6B7280", fontSize: "14px" }}>DataWhisper UI components and design system</p>
+          <p style={{ color: "#6B7280", fontSize: "14px" }}>Doppler UI components and design system</p>
         </div>
 
         {/* BUTTONS */}
@@ -440,7 +440,7 @@ export function ComponentLibrary() {
                 { type: "success", icon: CheckCircle2, color: "#C4FF40", bg: "rgba(196,255,64,0.08)", border: "rgba(196,255,64,0.2)", msg: "Query completed successfully. 1,248 rows returned." },
                 { type: "warning", icon: AlertTriangle, color: "#F97316", bg: "rgba(249,115,22,0.08)", border: "rgba(249,115,22,0.2)", msg: "Stripe sync failed. Last successful sync was 2 hours ago." },
                 { type: "error", icon: AlertCircle, color: "#EF4444", bg: "rgba(239,68,68,0.08)", border: "rgba(239,68,68,0.2)", msg: "Connection timeout. Please check your data source credentials." },
-                { type: "info", icon: Info, color: "#38BDF8", bg: "rgba(56,189,248,0.08)", border: "rgba(56,189,248,0.2)", msg: "New AI insight available. DataWhisper found a revenue opportunity worth $340K." },
+                { type: "info", icon: Info, color: "#38BDF8", bg: "rgba(56,189,248,0.08)", border: "rgba(56,189,248,0.2)", msg: "New AI insight available. Doppler found a revenue opportunity worth $340K." },
               ].map((alert) => (
                 <div
                   key={alert.type}
@@ -526,7 +526,7 @@ export function ComponentLibrary() {
         {activeSection === "AI Components" && (
           <div>
             <div style={CARD}>
-              <SectionTitle label="Ask DataWhisper Bar" />
+              <SectionTitle label="Ask Doppler Bar" />
               <div
                 className="flex items-center gap-3 p-4 rounded-2xl mb-6"
                 style={{ background: "linear-gradient(135deg, rgba(196,255,64,0.06), rgba(123,92,245,0.06))", border: "1px solid rgba(196,255,64,0.15)" }}

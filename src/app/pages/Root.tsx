@@ -54,27 +54,18 @@ export function Root() {
       >
         {/* Logo */}
         <div
-          className="flex items-center gap-3 px-4 py-5 flex-shrink-0"
+          className="flex items-center gap-3 px-4 py-3 flex-shrink-0"
           style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
         >
-          <div
-            className="flex items-center justify-center rounded-lg flex-shrink-0"
-            style={{
-              width: "32px",
-              height: "32px",
-              background: "linear-gradient(135deg, #C4FF40 0%, #7B5CF5 100%)",
-            }}
-          >
-            <Activity size={18} color="#000" />
-          </div>
-          {!collapsed && (
-            <span
-              className="overflow-hidden whitespace-nowrap"
-              style={{ color: "#fff", fontSize: "16px", fontWeight: 300 }}
-            >
-              DataWhisper
-            </span>
-          )}
+          <img 
+            src="/src/assets/logo.svg" 
+            alt="Doppler" 
+            style={{ 
+              height: collapsed ? "24px" : "32px", 
+              width: "auto",
+              transition: "height 0.3s ease-in-out"
+            }} 
+          />
         </div>
 
         {/* Nav items */}
@@ -154,7 +145,7 @@ export function Root() {
               <div className="flex items-center gap-2 mb-1">
                 <Sparkles size={14} style={{ color: "#C4FF40" }} />
                 <span className="text-xs" style={{ color: "#C4FF40", fontWeight: 400 }}>
-                  Ask DataWhisper
+                  Ask Doppler
                 </span>
               </div>
               <p className="text-xs" style={{ color: "#6B7280" }}>

@@ -12,7 +12,7 @@ import {
   Share2,
   Bookmark,
   Clock,
-  CheckCircle2,
+  Check,
   Filter,
   Search,
   MoreHorizontal,
@@ -62,7 +62,7 @@ const insights = [
     type: "anomaly",
     title: "Unusual Revenue Spike on Thursday",
     summary:
-      "Thursday's revenue was 42% above the 7-day rolling average. DataWhisper traced this to a single enterprise deal that closed early alongside a successful email campaign. The pattern suggests your sales team performs best mid-week.",
+      "Thursday's revenue was 42% above the 7-day rolling average. Doppler traced this to a single enterprise deal that closed early alongside a successful email campaign. The pattern suggests your sales team performs best mid-week.",
     confidence: 97,
     impact: "Medium",
     timeframe: "Yesterday",
@@ -162,7 +162,7 @@ export function Insights() {
             AI Insights
           </h1>
           <p style={{ color: "#6B7280", fontSize: "14px" }}>
-            DataWhisper found {insights.length} new insights for you
+            Doppler found {insights.length} new insights for you
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -260,7 +260,7 @@ export function Insights() {
                     {insight.timeframe}
                   </div>
                   <div className="flex items-center gap-1 text-xs ml-auto" style={{ color: "#6B7280" }}>
-                    <CheckCircle2 size={12} style={{ color: "#C4FF40" }} />
+                    <Check size={12} style={{ color: "#C4FF40" }} />
                     {insight.confidence}% confidence
                   </div>
                 </div>
