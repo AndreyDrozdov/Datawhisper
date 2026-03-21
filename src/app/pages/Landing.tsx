@@ -699,7 +699,7 @@ function AiQueryDemo() {
                     style={{ background: "rgba(123,92,245,0.08)", border: "1px solid rgba(123,92,245,0.15)" }}
                   >
                     <p className="text-sm" style={{ color: "#C4FF40" }}>
-                      "<TypeWriter text={activeQuery.question} onComplete={handleTypingComplete} />"
+                      <TypeWriter text={activeQuery.question} onComplete={handleTypingComplete} />
                     </p>
                   </div>
 
@@ -980,7 +980,7 @@ export function Landing() {
                   ))}
                 </div>
                 <p className="text-sm mb-6 leading-relaxed" style={{ color: "#8892A4" }}>
-                  "{t.quote}"
+                  {t.quote}
                 </p>
                 <div className="flex items-center gap-3">
                   <div

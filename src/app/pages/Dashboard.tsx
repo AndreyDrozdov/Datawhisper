@@ -145,7 +145,7 @@ const kpis = [
 const CARD = {
   background: "#0D0F1A",
   border: "1px solid rgba(255,255,255,0.06)",
-  borderRadius: "0",
+  borderRadius: "0.25rem",
 };
 
 export function Dashboard() {
@@ -307,11 +307,11 @@ export function Dashboard() {
                 cy="50%"
                 innerRadius={45}
                 outerRadius={65}
-                paddingAngle={3}
+                stroke="none"
                 dataKey="value"
               >
                 {channelData.map((entry, index) => (
-                  <Cell key={index} fill={entry.color} />
+                  <Cell key={index} fill={entry.color} stroke="none" />
                 ))}
               </Pie>
             </PieChart>

@@ -84,7 +84,7 @@ const radarData = [
 const CARD = {
   background: "#0D0F1A",
   border: "1px solid rgba(255,255,255,0.06)",
-  borderRadius: "0",
+  borderRadius: "0.25rem",
   padding: "24px",
   marginBottom: "24px",
 };
@@ -500,8 +500,8 @@ export function ComponentLibrary() {
                   <Label>Pie / Donut Chart</Label>
                   <ResponsiveContainer width="100%" height={140}>
                     <PieChart>
-                      <Pie data={pieData} cx="50%" cy="50%" innerRadius={35} outerRadius={55} paddingAngle={3} dataKey="value">
-                        {pieData.map((entry, i) => <Cell key={i} fill={entry.color} />)}
+                      <Pie data={pieData} cx="50%" cy="50%" innerRadius={35} outerRadius={55} stroke="none" dataKey="value">
+                        {pieData.map((entry, i) => <Cell key={i} fill={entry.color} stroke="none" />)}
                       </Pie>
                       <Tooltip contentStyle={{ background: "#1A1D2E", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0", color: "#fff", fontSize: "12px" }} />
                     </PieChart>

@@ -109,7 +109,7 @@ const statusConfig: Record<string, { label: string; color: string; icon: any; bg
 const CARD = {
   background: "#0D0F1A",
   border: "1px solid rgba(255,255,255,0.06)",
-  borderRadius: "0",
+  borderRadius: "0.25rem",
 };
 
 export function DataSources() {

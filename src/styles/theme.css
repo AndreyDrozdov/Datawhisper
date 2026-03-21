@@ -109,12 +109,12 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-xs: 0rem;
-  --radius-sm: 0rem;
-  --radius-md: 0rem;
-  --radius-lg: 0rem;
-  --radius-xl: 0rem;
-  --radius-2xl: 0rem;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.25rem;
+  --radius-2xl: 0.25rem;
   --font-weight-normal: 300;
   --font-weight-medium: 400;
   --font-weight-semibold: 500;
