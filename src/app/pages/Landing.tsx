@@ -1208,7 +1208,7 @@ export function Landing() {
                   <div className="mb-8">
                     <p className="text-xs uppercase tracking-widest mb-2 font-bold" style={{ color: accent }}>{plan.name}</p>
                     <div className="flex items-baseline gap-1">
-                      <span style={{ fontSize: "48px", fontWeight: 400, color: "#fff", letterSpacing: "-1px" }}>{plan.price}</span>
+                      <span style={{ fontSize: "48px", fontWeight: 400, color: "#fff", letterSpacing: "-1px", fontFamily: "'Space Grotesk', sans-serif" }}>{plan.price}</span>
                       <span className="text-sm" style={{ color: "#4A5568" }}>{plan.period}</span>
                     </div>
                     <p className="text-sm mt-2 leading-relaxed" style={{ color: "#8892A4" }}>{plan.desc}</p>
