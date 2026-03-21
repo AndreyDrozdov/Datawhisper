@@ -38,17 +38,17 @@ import {
 
 const revenueData = [
   { month: "Jan", revenue: 420, target: 400 },
-  { month: "Feb", revenue: 510, target: 430 },
-  { month: "Mar", revenue: 480, target: 460 },
-  { month: "Apr", revenue: 620, target: 500 },
-  { month: "May", revenue: 590, target: 530 },
-  { month: "Jun", revenue: 780, target: 560 },
-  { month: "Jul", revenue: 840, target: 600 },
-  { month: "Aug", revenue: 920, target: 650 },
-  { month: "Sep", revenue: 880, target: 700 },
-  { month: "Oct", revenue: 1050, target: 750 },
-  { month: "Nov", revenue: 990, target: 800 },
-  { month: "Dec", revenue: 1180, target: 850 },
+  { month: "Feb", revenue: 840, target: 430 },
+  { month: "Mar", revenue: 380, target: 460 },
+  { month: "Apr", revenue: 950, target: 500 },
+  { month: "May", revenue: 470, target: 530 },
+  { month: "Jun", revenue: 1120, target: 560 },
+  { month: "Jul", revenue: 580, target: 600 },
+  { month: "Aug", revenue: 1240, target: 650 },
+  { month: "Sep", revenue: 620, target: 700 },
+  { month: "Oct", revenue: 1420, target: 750 },
+  { month: "Nov", revenue: 810, target: 800 },
+  { month: "Dec", revenue: 1680, target: 850 },
 ];
 
 const channelData = [
@@ -283,10 +283,10 @@ export function Dashboard() {
               <XAxis dataKey="month" tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
               <Tooltip
-                contentStyle={{ background: "#1A1D2E", border: "none", borderRadius: "12px", color: "#fff", fontSize: "12px" }}
+                contentStyle={{ background: "#1A1D2E", border: "none", borderRadius: "0", color: "#fff", fontSize: "12px" }}
               />
-              <Area type="monotone" dataKey="revenue" stroke="#C4FF40" strokeWidth={2} fill="url(#revGrad)" dot={false} name="Revenue ($K)" />
-              <Area type="monotone" dataKey="target" stroke="#7B5CF5" strokeWidth={2} strokeDasharray="4 4" fill="url(#targetGrad)" dot={false} name="Target ($K)" />
+              <Area type="natural" dataKey="revenue" stroke="#C4FF40" strokeWidth={2} fill="url(#revGrad)" dot={false} name="Revenue ($K)" />
+              <Area type="natural" dataKey="target" stroke="#7B5CF5" strokeWidth={2} strokeDasharray="4 4" fill="url(#targetGrad)" dot={false} name="Target ($K)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -444,7 +444,7 @@ export function Dashboard() {
             <XAxis dataKey="day" tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
             <Tooltip
-              contentStyle={{ background: "#1A1D2E", border: "none", borderRadius: "12px", color: "#fff", fontSize: "12px" }}
+              contentStyle={{ background: "#1A1D2E", border: "none", borderRadius: "0", color: "#fff", fontSize: "12px" }}
             />
             <Bar dataKey="sessions" fill="#7B5CF5" radius={[4, 4, 0, 0]} maxBarSize={40} name="Sessions" />
             <Bar dataKey="conversions" fill="#C4FF40" radius={[4, 4, 0, 0]} maxBarSize={40} name="Conversions" />

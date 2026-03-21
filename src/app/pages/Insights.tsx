@@ -47,11 +47,11 @@ const insights = [
     tags: ["Revenue", "Upsell", "Enterprise"],
     chart: [
       { month: "Jan", value: 120 },
-      { month: "Feb", value: 145 },
-      { month: "Mar", value: 138 },
-      { month: "Apr", value: 190 },
-      { month: "May", value: 210 },
-      { month: "Jun", value: 248 },
+      { month: "Feb", value: 280 },
+      { month: "Mar", value: 95 },
+      { month: "Apr", value: 310 },
+      { month: "May", value: 110 },
+      { month: "Jun", value: 340 },
     ],
     icon: Zap,
     color: "#C4FF40",
@@ -69,11 +69,11 @@ const insights = [
     tags: ["Revenue", "Anomaly", "Sales"],
     chart: [
       { day: "Mon", value: 42 },
-      { day: "Tue", value: 48 },
-      { day: "Wed", value: 45 },
-      { day: "Thu", value: 89 },
-      { day: "Fri", value: 51 },
-      { day: "Sat", value: 32 },
+      { day: "Tue", value: 115 },
+      { day: "Wed", value: 28 },
+      { day: "Thu", value: 145 },
+      { day: "Fri", value: 39 },
+      { day: "Sat", value: 92 },
     ],
     icon: AlertTriangle,
     color: "#F97316",
@@ -351,7 +351,7 @@ export function Insights() {
                         </linearGradient>
                       </defs>
                       <Area
-                        type="monotone"
+                        type="natural"
                         dataKey="value"
                         stroke={insight.color}
                         strokeWidth={2}

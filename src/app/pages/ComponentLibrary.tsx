@@ -63,7 +63,7 @@ const sections = [
 ];
 
 const sparklineData = [
-  { v: 40 }, { v: 55 }, { v: 48 }, { v: 72 }, { v: 65 }, { v: 88 }, { v: 95 },
+  { v: 40 }, { v: 115 }, { v: 18 }, { v: 142 }, { v: 25 }, { v: 118 }, { v: 45 },
 ];
 
 const pieData = [
@@ -398,7 +398,7 @@ export function ComponentLibrary() {
                           <stop offset="95%" stopColor="#7B5CF5" stopOpacity={0} />
                         </linearGradient>
                       </defs>
-                      <Area type="monotone" dataKey="v" stroke="#7B5CF5" strokeWidth={2} fill="url(#spkGrad)" dot={false} />
+                      <Area type="natural" dataKey="v" stroke="#7B5CF5" strokeWidth={2} fill="url(#spkGrad)" dot={false} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -481,7 +481,7 @@ export function ComponentLibrary() {
                         </linearGradient>
                       </defs>
                       <CartesianGrid stroke="rgba(255,255,255,0.04)" vertical={false} />
-                      <Area type="monotone" dataKey="v" stroke="#C4FF40" strokeWidth={2} fill="url(#chartArea)" />
+                      <Area type="natural" dataKey="v" stroke="#C4FF40" strokeWidth={2} fill="url(#chartArea)" />
                       <Tooltip contentStyle={{ background: "#1A1D2E", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0", color: "#fff", fontSize: "12px" }} />
                     </AreaChart>
                   </ResponsiveContainer>

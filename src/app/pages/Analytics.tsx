@@ -33,17 +33,17 @@ import {
 
 const monthlyRevenue = [
   { month: "Jan", b2b: 320, b2c: 180, target: 450 },
-  { month: "Feb", b2b: 380, b2c: 210, target: 470 },
-  { month: "Mar", b2b: 290, b2c: 190, target: 490 },
-  { month: "Apr", b2b: 450, b2c: 240, target: 510 },
-  { month: "May", b2b: 420, b2c: 280, target: 530 },
-  { month: "Jun", b2b: 560, b2c: 310, target: 560 },
-  { month: "Jul", b2b: 590, b2c: 330, target: 590 },
-  { month: "Aug", b2b: 640, b2c: 360, target: 620 },
-  { month: "Sep", b2b: 610, b2c: 340, target: 650 },
-  { month: "Oct", b2b: 720, b2c: 390, target: 680 },
-  { month: "Nov", b2b: 680, b2c: 370, target: 710 },
-  { month: "Dec", b2b: 810, b2c: 420, target: 750 },
+  { month: "Feb", b2b: 780, b2c: 110, target: 470 },
+  { month: "Mar", b2b: 190, b2c: 420, target: 490 },
+  { month: "Apr", b2b: 850, b2c: 140, target: 510 },
+  { month: "May", b2b: 220, b2c: 680, target: 530 },
+  { month: "Jun", b2b: 960, b2c: 210, target: 560 },
+  { month: "Jul", b2b: 340, b2c: 830, target: 590 },
+  { month: "Aug", b2b: 1040, b2bCost: 460, target: 630 },
+  { month: "Sep", b2b: 410, b2c: 940, target: 650 },
+  { month: "Oct", b2b: 1120, b2c: 390, target: 700 },
+  { month: "Nov", b2b: 380, b2c: 1070, target: 750 },
+  { month: "Dec", b2b: 1310, b2c: 520, target: 800 },
 ];
 
 const funnelData = [
@@ -205,7 +205,7 @@ export function Analytics() {
               />
               <Bar dataKey="b2b" stackId="a" fill="#7B5CF5" name="B2B ($K)" />
               <Bar dataKey="b2c" stackId="a" fill="#C4FF40" radius={[4, 4, 0, 0]} name="B2C ($K)" />
-              <Line type="monotone" dataKey="target" stroke="#38BDF8" strokeWidth={2} strokeDasharray="4 4" dot={false} name="Target ($K)" />
+              <Line type="natural" dataKey="target" stroke="#38BDF8" strokeWidth={2} strokeDasharray="4 4" dot={false} name="Target ($K)" />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
@@ -261,7 +261,7 @@ export function Analytics() {
                 contentStyle={{ background: "#1A1D2E", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0", color: "#fff", fontSize: "12px" }}
                 formatter={(v) => [`${v}%`, "Retention"]}
               />
-              <Area type="monotone" dataKey="retention" stroke="#38BDF8" strokeWidth={2} fill="url(#retGrad)" dot={{ fill: "#38BDF8", r: 4 }} />
+              <Area type="natural" dataKey="retention" stroke="#38BDF8" strokeWidth={2} fill="url(#retGrad)" dot={{ fill: "#38BDF8", r: 4 }} />
             </AreaChart>
           </ResponsiveContainer>
         </div>

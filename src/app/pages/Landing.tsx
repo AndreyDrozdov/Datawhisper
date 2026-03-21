@@ -43,13 +43,13 @@ const dashboardMetrics = [
     secondaryColor: "#6B7280",
     data: [
       { month: "Jan", revenue: 1.2, cost: 0.8 },
-      { month: "Feb", revenue: 1.4, cost: 0.9 },
-      { month: "Mar", revenue: 1.3, cost: 0.85 },
-      { month: "Apr", revenue: 1.7, cost: 1.0 },
-      { month: "May", revenue: 1.9, cost: 1.1 },
-      { month: "Jun", revenue: 2.1, cost: 1.15 },
-      { month: "Jul", revenue: 2.3, cost: 1.2 },
-      { month: "Aug", revenue: 2.4, cost: 1.25 },
+      { month: "Feb", revenue: 2.1, cost: 1.1 },
+      { month: "Mar", revenue: 0.9, cost: 0.85 },
+      { month: "Apr", revenue: 2.3, cost: 0.75 },
+      { month: "May", revenue: 1.4, cost: 1.2 },
+      { month: "Jun", revenue: 2.6, cost: 0.95 },
+      { month: "Jul", revenue: 1.1, cost: 1.3 },
+      { month: "Aug", revenue: 2.8, cost: 0.85 },
     ],
   },
   {
@@ -62,14 +62,14 @@ const dashboardMetrics = [
     primaryColor: "#38BDF8",
     secondaryColor: "#6B7280",
     data: [
-      { month: "Jan", users: 8200, newUsers: 1200 },
-      { month: "Feb", users: 9100, newUsers: 1400 },
-      { month: "Mar", users: 9800, newUsers: 1100 },
-      { month: "Apr", users: 10500, newUsers: 1600 },
-      { month: "May", users: 11200, newUsers: 1300 },
-      { month: "Jun", users: 12400, newUsers: 1800 },
-      { month: "Jul", users: 13600, newUsers: 2000 },
-      { month: "Aug", users: 14832, newUsers: 2200 },
+      { month: "Jan", users: 8200, newUsers: 1400 },
+      { month: "Feb", users: 12500, newUsers: 600 },
+      { month: "Mar", users: 9500, newUsers: 1800 },
+      { month: "Apr", users: 14800, newUsers: 700 },
+      { month: "May", users: 10800, newUsers: 2200 },
+      { month: "Jun", users: 15400, newUsers: 900 },
+      { month: "Jul", users: 11200, newUsers: 2000 },
+      { month: "Aug", users: 16200, newUsers: 1100 },
     ],
   },
   {
@@ -83,13 +83,13 @@ const dashboardMetrics = [
     secondaryColor: "#6B7280",
     data: [
       { month: "Jan", conversion: 3.2, benchmark: 3.5 },
-      { month: "Feb", conversion: 3.4, benchmark: 3.5 },
-      { month: "Mar", conversion: 3.1, benchmark: 3.5 },
-      { month: "Apr", conversion: 3.8, benchmark: 3.6 },
-      { month: "May", conversion: 4.0, benchmark: 3.6 },
-      { month: "Jun", conversion: 4.2, benchmark: 3.7 },
-      { month: "Jul", conversion: 4.5, benchmark: 3.7 },
-      { month: "Aug", conversion: 4.7, benchmark: 3.8 },
+      { month: "Feb", conversion: 5.4, benchmark: 3.2 },
+      { month: "Mar", conversion: 2.8, benchmark: 3.8 },
+      { month: "Apr", conversion: 6.1, benchmark: 3.4 },
+      { month: "May", conversion: 3.5, benchmark: 4.1 },
+      { month: "Jun", conversion: 5.8, benchmark: 3.5 },
+      { month: "Jul", conversion: 3.9, benchmark: 3.9 },
+      { month: "Aug", conversion: 6.4, benchmark: 3.6 },
     ],
   },
   {
@@ -103,13 +103,13 @@ const dashboardMetrics = [
     secondaryColor: "#6B7280",
     data: [
       { month: "Jan", dealSize: 5.8, target: 6.0 },
-      { month: "Feb", dealSize: 6.1, target: 6.2 },
-      { month: "Mar", dealSize: 5.9, target: 6.4 },
-      { month: "Apr", dealSize: 6.8, target: 6.6 },
-      { month: "May", dealSize: 7.2, target: 6.8 },
-      { month: "Jun", dealSize: 7.5, target: 7.0 },
-      { month: "Jul", dealSize: 7.9, target: 7.2 },
-      { month: "Aug", dealSize: 8.2, target: 7.4 },
+      { month: "Feb", dealSize: 3.2, target: 6.5 },
+      { month: "Mar", dealSize: 8.4, target: 5.8 },
+      { month: "Apr", dealSize: 4.9, target: 6.8 },
+      { month: "May", dealSize: 9.1, target: 6.1 },
+      { month: "Jun", dealSize: 5.5, target: 7.1 },
+      { month: "Jul", dealSize: 9.8, target: 6.4 },
+      { month: "Aug", dealSize: 6.8, target: 7.4 },
     ],
   },
 ];
@@ -132,7 +132,7 @@ const AnchoredTooltip = (props: any) => {
           y={cy - 44}
           width={70}
           height={26}
-          rx={8}
+          rx={0}
           fill={color}
         />
         <path
@@ -312,7 +312,7 @@ function DashboardDemo() {
                   <XAxis dataKey="month" tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
                   <YAxis width={40} tick={{ fill: "#4A5568", fontSize: 11 }} axisLine={false} tickLine={false} />
                   <Area
-                    type="monotone"
+                    type="natural"
                     dataKey={metric.primaryKey}
                     stroke={metric.primaryColor}
                     strokeWidth={2}
@@ -322,7 +322,7 @@ function DashboardDemo() {
                     animationEasing="ease-out"
                   />
                   <Area
-                    type="monotone"
+                    type="natural"
                     dataKey={metric.secondaryKey}
                     stroke={metric.secondaryColor}
                     strokeWidth={1.5}
