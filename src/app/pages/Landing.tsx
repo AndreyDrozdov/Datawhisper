@@ -783,6 +783,8 @@ function AiQueryDemo() {
   );
 }
 
+import { MazeBackground } from "../components/MazeBackground";
+
 export function Landing() {
   return (
     <div
@@ -834,66 +836,68 @@ export function Landing() {
       </nav>
 
       {/* Hero */}
-      <section className="relative pt-40 pb-20 px-8 text-center overflow-hidden">
-
-
-        <div
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-8"
-          style={{
-            background: "rgba(196,255,64,0.08)",
-            border: "1px solid rgba(196,255,64,0.2)",
-            color: "#C4FF40",
-          }}
-        >
-          <Sparkles size={14} />
-          AI-Powered Data Intelligence Platform
-          <ChevronRight size={14} />
-        </div>
-
-        <h1
-          className="max-w-4xl mx-auto mb-6"
-          style={{
-            fontSize: "clamp(40px, 6vw, 76px)",
-            fontWeight: 600,
-            lineHeight: 1.1,
-            letterSpacing: "-2px",
-          }}
-        >
-          Turn your data into{" "}
-          <span style={{ color: "#C4FF40" }}>instant insights</span>
-        </h1>
-        <p
-          className="max-w-2xl mx-auto mb-10 text-lg"
-          style={{ color: "#8892A4", lineHeight: 1.7 }}
-        >
-          Doppler connects to your data sources and lets you ask questions in plain
-          English. Get AI-generated charts, reports, and recommendations — in seconds.
-        </p>
-
-        <div className="flex items-center justify-center gap-4 flex-wrap">
-          <Link
-            to="/signup"
-            className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm transition-all hover:opacity-90"
-            style={{ background: "#C4FF40", color: "#000", fontWeight: 400 }}
-          >
-            Start for free <ArrowRight size={16} />
-          </Link>
-          <button
-            className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm transition-all"
+      <section className="relative pt-40 pb-20 px-8 text-center overflow-hidden min-h-screen flex flex-col items-center justify-center">
+        <MazeBackground />
+        
+        <div className="relative z-10 flex flex-col items-center justify-center">
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-8"
             style={{
-              background: "rgba(255,255,255,0.06)",
-              color: "#fff",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: "rgba(196,255,64,0.08)",
+              border: "1px solid rgba(196,255,64,0.2)",
+              color: "#C4FF40",
             }}
           >
-            <Play size={14} />
-            Watch demo
-          </button>
-        </div>
+            <Sparkles size={14} />
+            AI-Powered Data Intelligence Platform
+            <ChevronRight size={14} />
+          </div>
 
-        <p className="mt-4 text-sm" style={{ color: "#4A5568" }}>
-          No credit card required · 14-day free trial · Cancel anytime
-        </p>
+          <h1
+            className="max-w-4xl mx-auto mb-6"
+            style={{
+              fontSize: "clamp(40px, 6vw, 76px)",
+              fontWeight: 600,
+              lineHeight: 1.1,
+              letterSpacing: "-2px",
+            }}
+          >
+            Turn your data into{" "}
+            <span style={{ color: "#C4FF40" }}>instant insights</span>
+          </h1>
+          <p
+            className="max-w-2xl mx-auto mb-10 text-lg"
+            style={{ color: "#8892A4", lineHeight: 1.7 }}
+          >
+            Doppler connects to your data sources and lets you ask questions in plain
+            English. Get AI-generated charts, reports, and recommendations — in seconds.
+          </p>
+
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <Link
+              to="/signup"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm transition-all hover:opacity-90"
+              style={{ background: "#C4FF40", color: "#000", fontWeight: 400 }}
+            >
+              Start for free <ArrowRight size={16} />
+            </Link>
+            <button
+              className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm transition-all"
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.1)",
+              }}
+            >
+              <Play size={14} />
+              Watch demo
+            </button>
+          </div>
+
+          <p className="mt-4 text-sm" style={{ color: "#4A5568" }}>
+            No credit card required · 14-day free trial · Cancel anytime
+          </p>
+        </div>
 
         {/* Dashboard preview */}
         <DashboardDemo />
