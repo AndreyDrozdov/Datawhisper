@@ -70,7 +70,13 @@ export const MazeBackground: React.FC = () => {
   }, [grid]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-100 select-none">
+    <div 
+      className="absolute inset-0 pointer-events-none overflow-hidden opacity-100 select-none"
+      style={{
+        maskImage: 'radial-gradient(circle, rgba(0,0,0,0.2) 20%, black 80%)',
+        WebkitMaskImage: 'radial-gradient(circle, rgba(0,0,0,0.2) 20%, black 80%)'
+      }}
+    >
       <canvas
         ref={canvasRef}
         width={canvasWidth}

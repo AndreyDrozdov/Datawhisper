@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router";
 import { Mail, Lock, Eye, EyeOff, Activity, ArrowRight, Github, Star } from "lucide-react";
 import { toast } from "sonner";
 
+import { MazeBackground } from "../components/MazeBackground";
+
 export function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -94,8 +96,9 @@ export function Login() {
       </div>
 
       {/* Right panel — Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
+      <div className="flex-1 flex items-center justify-center p-8 relative overflow-hidden">
+        <MazeBackground />
+        <div className="w-full max-w-md relative z-10">
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-8 lg:hidden">
             <img src="/src/assets/logo.svg" alt="Doppler" style={{ height: "32px", width: "auto" }} />

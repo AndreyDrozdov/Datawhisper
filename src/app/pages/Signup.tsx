@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { Mail, Lock, Eye, EyeOff, User, Building2, Activity, ArrowRight, Check } from "lucide-react";
 import { toast } from "sonner";
+import { MazeBackground } from "../components/MazeBackground";
 
 const steps = ["Account", "Company", "Plan"];
 
@@ -35,10 +36,11 @@ export function Signup() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-8"
+      className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden"
       style={{ background: "#090B13" }}
     >
-      <div className="w-full max-w-lg">
+      <MazeBackground />
+      <div className="w-full max-w-lg relative z-10">
         {/* Logo */}
         <div className="flex items-center gap-2 justify-center mb-8 text-center">
           <img src="/src/assets/logo.svg" alt="Doppler" style={{ height: "32px", width: "auto" }} />
