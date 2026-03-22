@@ -842,9 +842,25 @@ function TestimonialCard({ testimonial: t, gradient }: { testimonial: typeof tes
 
 function TestimonialCarousel() {
   const [index, setIndex] = useState(0);
+  const [visibleCards, setVisibleCards] = useState(3);
   const cardCount = testimonials.length;
   const [isAnimating, setIsAnimating] = useState(false);
   const GAP = 24;
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleCards(1);
+      } else if (window.innerWidth < 1024) {
+        setVisibleCards(2);
+      } else {
+        setVisibleCards(3);
+      }
+    };
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const gradients = [
     "linear-gradient(135deg, #C4FF40, #10B981)", // Lime
@@ -884,7 +900,7 @@ function TestimonialCarousel() {
           className="flex items-center"
           style={{ gap: `${GAP}px` }}
           initial={false}
-          animate={{ x: `calc(-${index} * ((100% - ${GAP * 2}px) / 3 + ${GAP}px))` }}
+          animate={{ x: `calc(-${index} * ((100% - ${GAP * (visibleCards - 1)}px) / ${visibleCards} + ${GAP}px))` }}
           transition={{ 
             type: "spring", 
             stiffness: 100, 
@@ -898,19 +914,15 @@ function TestimonialCarousel() {
           }}
         >
           {extendedTestimonials.map((t, i) => {
-            // In index 0, center is 1. In index 6 (clone), center should also be 1.
-            // But visually index 6 looks like index 0.
-            // So the center logic must be relative to the display.
-            const effectiveIndex = index % cardCount;
-            const isCenter = i === index + 1;
-            
-            const isLeft = i < index + 1;
+            const centerOffset = Math.floor(visibleCards / 2);
+            const isCenter = i === index + centerOffset;
+            const isLeft = i < index + centerOffset;
             const gradient = gradients[i % gradients.length];
             return (
               <motion.div 
                 key={`${i}-${t.name}`} 
                 className="flex-shrink-0"
-                style={{ width: `calc((100% - ${GAP * 2}px) / 3)`, perspective: "1200px" }}
+                style={{ width: `calc((100% - ${GAP * (visibleCards - 1)}px) / ${visibleCards})`, perspective: "1200px" }}
                 animate={{ 
                   scale: isCenter ? 1.05 : 0.9,
                   opacity: isCenter ? 1 : 0.8,
