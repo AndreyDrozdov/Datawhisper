@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 
-export const MazeBackground: React.FC = () => {
+export const MazeBackground: React.FC<{ noMask?: boolean }> = ({ noMask }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Constants for our fixed-size background
@@ -73,7 +73,7 @@ export const MazeBackground: React.FC = () => {
   return (
     <div 
       className="absolute inset-0 pointer-events-none overflow-hidden opacity-100 select-none"
-      style={{
+      style={noMask ? {} : {
         maskImage: 'radial-gradient(circle, rgba(0,0,0,0.2) 20%, black 80%)',
         WebkitMaskImage: 'radial-gradient(circle, rgba(0,0,0,0.2) 20%, black 80%)'
       }}

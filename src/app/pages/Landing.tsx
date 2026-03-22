@@ -955,6 +955,54 @@ function TestimonialCarousel() {
   );
 }
 
+function Marquee() {
+  const items = [
+    "Machine Learning",
+    "Real-time Analytics",
+    "Predictive Modeling",
+    "Data Pipelines",
+    "Automated Reporting",
+    "Natural Language Queries",
+    "Anomaly Detection",
+    "Data Governance"
+  ];
+  
+  // Duplicated enough to safely transform -50% seamlessly
+  const scrollItems = [...items, ...items, ...items, ...items, ...items, ...items];
+
+  return (
+    <div className="relative w-full overflow-hidden py-8 my-8" style={{ background: "rgba(255,255,255,0.01)", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      {/* Background Maze without center mask */}
+      <div className="absolute inset-0 opacity-50"><MazeBackground noMask /></div>
+
+      {/* Left & Right gradient edges for fade out effect */}
+      <div className="absolute top-0 bottom-0 left-0 w-32 z-10 pointer-events-none" style={{ background: "linear-gradient(to right, #090B13, transparent)" }} />
+      <div className="absolute top-0 bottom-0 right-0 w-32 z-10 pointer-events-none" style={{ background: "linear-gradient(to left, #090B13, transparent)" }} />
+
+      <style>{`
+        @keyframes marquee-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee-scroll 60s linear infinite;
+        }
+      `}</style>
+
+      <div className="flex w-max animate-marquee relative z-20">
+        {scrollItems.map((item, index) => (
+          <div key={index} className="flex items-center mx-8 md:mx-12">
+            <Sparkles size={16} className="mr-3 opacity-50" style={{ color: "#7B5CF5" }} />
+            <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] whitespace-nowrap" style={{ color: "rgba(255,255,255,0.75)", fontFamily: "'Space Grotesk', sans-serif" }}>
+              {item}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Landing() {
   return (
     <div
@@ -1046,7 +1094,7 @@ export function Landing() {
                 textTransform: "uppercase"
               }}
             >
-              instant insights
+              powerful insights
             </span>
           </h1>
           <p
@@ -1164,6 +1212,9 @@ export function Landing() {
           <TestimonialCarousel />
         </div>
       </section>
+
+      {/* Marquee Ticker */}
+      <Marquee />
 
       {/* Pricing */}
       <section className="py-24 px-8" style={{ background: "#090B13" }}>
