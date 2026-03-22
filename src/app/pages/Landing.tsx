@@ -266,7 +266,7 @@ function DashboardDemo() {
 
         {/* Chart */}
         <div
-          className="rounded-xl px-4 pt-4 pb-4 relative"
+          className="rounded-xl px-2 md:px-4 pt-4 pb-4 relative"
           style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
           <div className="flex items-center justify-between mb-3">
@@ -303,7 +303,7 @@ function DashboardDemo() {
               transition={{ duration: 0.4 }}
             >
               <ResponsiveContainer width="100%" height={180}>
-                <AreaChart data={metric.data} margin={{ left: 10, right: 50, top: 35, bottom: 0 }}>
+                <AreaChart data={metric.data} margin={{ left: -15, right: 15, top: 35, bottom: 0 }}>
                   <defs>
                     <linearGradient id={`grad1-${activeMetric}`} x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor={metric.primaryColor} stopOpacity={0.3} />
